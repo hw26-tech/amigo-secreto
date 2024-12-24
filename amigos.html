@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigos Secretos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        form {
+            margin: 20px auto;
+            width: 300px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
+        }
+        .result {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Amigos Secretos</h1>
+    <div id="draw">
+        <p>Escribe tu nombre para saber a quién le regalas:</p>
+        <input type="text" id="participantName" placeholder="Tu nombre">
+        <button onclick="revealSecretSanta()">Ver resultado</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Nombres predefinidos
+        const participants = [
+            "Margot",
+            "Hanyela",
+            "Papá",
+            "Alejandro",
+            "Luis",
+            "Aurora",
+            "Amanda",
+            "Karolayn",
+            "Eduardo"
+        ];
+
+        // Crear asignaciones aleatorias
+        const shuffled = [...participants];
+        do {
+            shuffled.sort(() => Math.random() - 0.5);
+        } while (shuffled.some((name, index) => name === participants[index]));
+
+        const assignments = participants.reduce((acc, name, index) => {
+            acc[name] = shuffled[index];
+            return acc;
+        }, {});
+
+        function revealSecretSanta() {
+            const participantName = document.getElementById("participantName").value.trim();
+            if (!participantName || !assignments[participantName]) {
+                alert("Tu nombre no está en la lista. Inténtalo de nuevo.");
+                return;
+            }
+
+            const assigned = assignments[participantName];
+            document.getElementById("result").innerHTML = `A ti te toca: <strong>${assigned}</strong>`;
+        }
+    </script>
+</body>
+</html>
